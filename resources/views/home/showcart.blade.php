@@ -24,7 +24,7 @@
         <style type="text/css">
             .center {
                 margin: auto;
-                width: 50%;
+                width: 70%;
                 text-align: center;
                 padding: 30px;
             }
@@ -43,6 +43,16 @@
                 font-size: 30px;
                 padding: 5px;
                 background: skyblue;
+            }
+
+            .img_deg {
+                width: 200px;
+                object-fit: cover;
+            }
+
+            .total_deg {
+                font-size: 20px;
+                padding: 40px;
             }
         </style>
     </head>
@@ -66,24 +76,41 @@
                     <th class="th_deg">Action</th>
                 </tr>
 
+                <?php 
+                    $totalprice = 0;
+                ?>
+
                 @foreach ($cart as $carts)
 
                 <tr>
                     <td>{{ $carts->product_title }}</td>
                     <td>{{ $carts->quantity }}</td>
-                    <td>{{ $carts->price }}</td>
+                    <td>${{ $carts->price }}</td>
                     <td>
-                        <img src="product/{{ $carts->image }}" alt="" style="width: 200px; object-fit: cover;">
+                        <img class="img_deg" src="/product/{{ $carts->image }}" alt="">
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" onclick="return confirm('Please confirm')" href="{{ url('remove_cart', $carts->id) }}">Remove Product</a>
                     </td>
                 </tr>
 
+                <?php 
+                    $totalprice += $carts->price;
+                ?>
+
                 @endforeach
                 
+                
             </table>
+
+            <div>
+                <h1 class="total_deg">Total Price: ${{ $totalprice }}</h1>
+            </div>
+
         </div>
         
         <!-- footer start -->
-        @include('home.footer')
+        
         <!-- footer end -->
         <div class="cpy_">
             <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
